@@ -50,8 +50,10 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { email: user.email, userId: user._id },
             process.env.JWT_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "1s" }
         );
+        res.cookie('jwt-token', token, {httpOnly: true});
+        
         res.status(200).json({
             token: token,
             email: user.email,
@@ -62,14 +64,5 @@ router.post("/login", async (req, res) => {
         res.status(500).json(error);
     }
 });
-
-router.delete("/:userId", checkAuth, (req, res) => {
-    if (req.user.userId === req.params.userId) {
-        res.status(200).json("User has been deleted");
-    } else {
-        res.status(403).json("you are not allowed to delete this user");
-    }
-})
-
 
 module.exports = router;

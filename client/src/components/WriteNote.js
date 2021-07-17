@@ -11,6 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AddCircleIcon from '@material-ui/icons/AddCircle';
 import CloseIcon from '@material-ui/icons/Close';
 import Snackbar from '@material-ui/core/Snackbar';
+import NoteAddIcon from '@material-ui/icons/NoteAdd';
 import axios from 'axios';
 
 const useStyles = makeStyles(() => ({
@@ -52,8 +53,9 @@ export default function WriteNote() {
 
   const handleSubmit = async () => {
     setSnackOpen(true);
+    const storedData = JSON.parse(localStorage.getItem('user'));
     const newNote = {
-      email: "test@test.com",
+      userId: storedData.userId,
       title: title,
       content: content
     };
@@ -79,8 +81,13 @@ export default function WriteNote() {
   return (
     <div className={classes.newNote}>
       <CssBaseline />
-      <Button variant="outlined" className={classes.customColor} onClick={handleClickOpen} >
-        New Note
+      <Button 
+        variant="outlined" 
+        className={classes.customColor} 
+        onClick={handleClickOpen}
+        startIcon={<NoteAddIcon />}
+      >
+        Note
       </Button>
       <Snackbar
         anchorOrigin={{

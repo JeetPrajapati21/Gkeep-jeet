@@ -4,6 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import axios from 'axios';
 import Tooltip from '@material-ui/core/Tooltip';
+import DeleteIcon from '@material-ui/icons/Delete';
 import { Button, makeStyles } from '@material-ui/core';
 
 
@@ -36,8 +37,8 @@ export default function DeleteAllNotes() {
   const handleDelete = async () => {
     setOpen(true);
     try {
-        const email = "test@test.com";
-        await axios.delete(`/api/note/?email=${email}`);
+      const storedData = JSON.parse(localStorage.getItem('user'));
+      await axios.delete(`/api/note/?userId=${storedData.userId}`);
     } catch (error) {
         
     }
@@ -46,7 +47,12 @@ export default function DeleteAllNotes() {
   return (
     <div className={classes.newNote}>
       <Tooltip title="Delete All Notes">
-        <Button variant="outlined" className={classes.customColor} onClick={handleDelete} >
+        <Button 
+          variant="outlined" 
+          className={classes.customColor} 
+          onClick={handleDelete} 
+          startIcon={<DeleteIcon />}
+        >
             Delete Notes
         </Button>
       </Tooltip>

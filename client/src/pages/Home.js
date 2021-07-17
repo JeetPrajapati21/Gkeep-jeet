@@ -7,9 +7,6 @@ import { createTheme, makeStyles, ThemeProvider } from '@material-ui/core/styles
 import Container from '@material-ui/core/Container';
 
 const useStyles = makeStyles((theme) => ({
-  icon: {
-    marginRight: theme.spacing(2),
-  },
   heroContent: {
     padding: theme.spacing(15, 0, 6),
     color: '#1976d2',
@@ -17,25 +14,6 @@ const useStyles = makeStyles((theme) => ({
   heroButtons: {
     marginTop: theme.spacing(4),
   },
-  cardGrid: {
-    paddingTop: theme.spacing(8),
-    paddingBottom: theme.spacing(8),
-  },
-  card: {
-    height: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-  },
-  cardMedia: {
-    paddingTop: '56.25%', // 16:9
-  },
-  cardContent: {
-    flexGrow: 1,
-  },
-  Registerbutton: {
-    color: '#1976d2',
-    borderColor: '#1976d2'
-  }
 }));
 
 const theme = createTheme({
@@ -48,6 +26,7 @@ const theme = createTheme({
 
 export default function Home() {
   const classes = useStyles();
+  let storedData = JSON.parse(localStorage.getItem('user'));
 
   return (
     <React.Fragment>
@@ -61,20 +40,19 @@ export default function Home() {
               This is a clone of Google Keep app.
             </Typography>
             <div className={classes.heroButtons}>
-              <Grid container spacing={2} justifyContent="center">
-                <Grid item>
-                  <ThemeProvider theme={theme}>
-                    <Button variant="contained" color='primary' href="/login">
-                      Login
-                    </Button>
-                  </ThemeProvider>
-                </Grid>
-                <Grid item>
-                  <Button variant="outlined" className={classes.Registerbutton} href="/register">
-                    Register
-                  </Button>
-                </Grid>
-              </Grid>
+                {
+                  storedData 
+                  &&
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item>
+                      <ThemeProvider theme={theme}>
+                          <Button variant="contained" color='primary' href="/notes">
+                            Notes
+                          </Button>
+                        </ThemeProvider>
+                    </Grid>
+                  </Grid>
+                }
             </div>
           </Container>
         </div>

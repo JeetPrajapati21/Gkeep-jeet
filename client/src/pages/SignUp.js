@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -47,9 +48,16 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    window.location.replace("/login");
+    axios.post("/api/auth/register", {
+      email,
+      password
+    }).then(res => {
+      window.location.replace("/login");
+    }).catch(err => {
+      window.alert("User Already Exist");
+    })
   }
 
   return (

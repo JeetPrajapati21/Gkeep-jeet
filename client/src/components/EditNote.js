@@ -39,7 +39,7 @@ export default function EditNote(props) {
 
   const handleUpdate = () => {
     setSnackOpen(true);
-    axios.put(`/api/note/${props.note._id}`, {email: "test@test.com", title, content});
+    axios.put(`/api/note/${props.note._id}`, {email: props.note.email, title, content});
     handleClose();
   };
 

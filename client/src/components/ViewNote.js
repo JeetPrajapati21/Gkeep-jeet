@@ -46,6 +46,7 @@ export default function ViewNote(props) {
         aria-labelledby="scroll-dialog-title"
         aria-describedby="scroll-dialog-description"
         fullWidth
+        maxWidth="xs"
       >
         <DialogTitle id="scroll-dialog-title">{`Title: ${props.note.title}`}</DialogTitle>
         <DialogContent dividers={scroll === 'paper'}>

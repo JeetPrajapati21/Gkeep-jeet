@@ -6,13 +6,20 @@ const checkAuth = require('../middlewares/check-auth');
 //Post
 
 router.post("/", async (req, res) => {
-    const newNote = new Note(req.body);
-    try {
-        const saveNote = await newNote.save();
-
-        res.status(200).json(saveNote);
-    } catch (error) {
-        res.status(500).json(error);
+    const user = await User.findById(req.body.userId);
+    if (user) {
+        const newNote = new Note({
+            email: user.email,
+            title: req.body.title,
+            content: req.body.content
+        });
+        try {
+            const saveNote = await newNote.save();
+    
+            res.status(200).json(saveNote);
+        } catch (error) {
+            res.status(500).json(error);
+        }
     }
 });
 
@@ -63,11 +70,14 @@ router.delete("/:id", async (req, res) => {
 //Delete All Notes 
 
 router.delete("/", async (req, res) => {
-    try {
-        await Note.deleteMany({email: req.query.email});
-        res.status(200).json("Notes have been deleted!");
-    } catch(error) {
-        res.status(500).json(error);
+    const user = await User.findById(req.query.userId);
+    if (user) {
+        try {
+            await Note.deleteMany({email: user.email});
+            res.status(200).json("Notes have been deleted!");
+        } catch(error) {
+            res.status(500).json(error);
+        }
     }
 });
 
@@ -85,16 +95,18 @@ router.get("/:id", async (req, res) => {
 //Get All Notes 
 
 router.get("/", async (req, res) => {
-    const email = req.query.email;
-    try {
-        let notes;
-        if (email) {
-            notes = await Note.find({email});
+    const user = await User.findById(req.query.userId);
+    if (user) {
+        try {
+            let notes;
+            if (user.email) {
+                notes = await Note.find({email: user.email});
+            }
+    
+            res.status(200).json(notes);
+        } catch (error) {
+            res.status(500).json(error);
         }
-
-        res.status(200).json(notes);
-    } catch (error) {
-        res.status(500).json(error);
     }
 });
 

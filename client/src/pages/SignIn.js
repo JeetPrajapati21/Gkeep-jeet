@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,7 +9,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles, createTheme, ThemeProvider } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
+import axios from 'axios';
+import { AuthContext } from '../context/auth-context';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -44,11 +45,21 @@ const theme = createTheme({
 
 export default function SignIn() {
   const classes = useStyles();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const auth = useContext(AuthContext);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-
-    window.location.replace("/");
+    axios.post("/api/auth/login", {
+      email,
+      password
+    }).then(res => {
+      auth.login(res.data.userId, res.data.token);
+      window.location.replace("/");
+    }).catch(err => {
+      window.alert("Wrong Email or Password");
+    })
   }
 
   return (
@@ -69,6 +80,7 @@ export default function SignIn() {
               required
               fullWidth
               label="Email"
+              onChange={e => setEmail((e.target.value))}
               autoFocus
             />
             <TextField
@@ -77,6 +89,7 @@ export default function SignIn() {
               required
               fullWidth
               label="Password"
+              onChange={e => setPassword(e.target.value)}
               type="password"
             />
             <Button
