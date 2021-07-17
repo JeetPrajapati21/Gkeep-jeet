@@ -10,12 +10,6 @@ const cookieParser = require('cookie-parser');
 
 const PORT = process.env.PORT || 5000;
 
-app.get("/", (req, res) => {
-    res.json({
-        message: "welcome to Amossra"
-    })
-})
-
 const corsOptions = {
     origin: "http://localhost:5000"
 };
@@ -39,6 +33,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/note', noteRouter);
 app.use('/api/user', userRouter);
 
-app.listen(5000, () => {
+app.listen(PORT, () => {
     console.log(`Server running on port: 5000`);
 });
