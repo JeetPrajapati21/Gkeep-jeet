@@ -9,10 +9,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import Slide from '@material-ui/core/Slide';
 import useScrollTrigger from '@material-ui/core/useScrollTrigger';
 import { AuthContext } from '../context/auth-context';
-import HomeIcon from '@material-ui/icons/Home';
-import NoteIcon from '@material-ui/icons/Note';
-import SettingsIcon from '@material-ui/icons/Settings';
-import { Icon } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   '@global': {
@@ -53,7 +49,7 @@ HideOnScroll.propTypes = {
 
 export default function NavBar() {
   const classes = useStyles();
-
+  
   const auth = useContext(AuthContext);
 
   let storedData = JSON.parse(localStorage.getItem('user'));
@@ -74,13 +70,10 @@ export default function NavBar() {
             </Typography>
             <nav>
               <Link variant="button" color="inherit" href="/" className={classes.link}>
-                <HomeIcon />
+                Home
               </Link>
               <Link variant="button" color="inherit" href="/notes" className={classes.link}>
-                <NoteIcon />
-              </Link>
-              <Link variant="button" color="inherit" href="#" className={classes.link}>
-                <SettingsIcon />
+                Notes
               </Link>
             </nav>
             {
@@ -93,7 +86,7 @@ export default function NavBar() {
                 className={classes.link}
                 onClick={handleClick}
               >
-                <Icon className="fas fa-sign-out-alt" />
+                Logout
               </Link>
               :
               <Link 
@@ -102,7 +95,7 @@ export default function NavBar() {
                 href="/login" 
                 className={classes.link}
               >
-                <Icon className="fas fa-sign-in-alt" />
+                Login
               </Link>
             }
           </Toolbar>

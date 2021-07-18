@@ -36,13 +36,10 @@ export default function Home() {
             <Typography component="h1" variant="h2" align="center" gutterBottom>
               GKeep
             </Typography>
-            <Typography variant="h5" align="center" paragraph>
-              This is a clone of Google Keep app.
-            </Typography>
             <div className={classes.heroButtons}>
                 {
                   storedData 
-                  &&
+                  ?
                   <Grid container spacing={2} justifyContent="center">
                     <Grid item>
                       <ThemeProvider theme={theme}>
@@ -50,6 +47,23 @@ export default function Home() {
                             Notes
                           </Button>
                         </ThemeProvider>
+                    </Grid>
+                  </Grid>
+                  :
+                  <Grid container spacing={2} justifyContent="center">
+                    <Grid item>
+                      <ThemeProvider theme={theme}>
+                        <Button variant="contained" color='primary' href="/login">
+                          Login
+                        </Button>
+                      </ThemeProvider>
+                    </Grid>
+                    <Grid item>
+                      <ThemeProvider theme={theme}>
+                        <Button variant="outlined" color='primary' href="/register">
+                          Register
+                        </Button>
+                      </ThemeProvider>
                     </Grid>
                   </Grid>
                 }
